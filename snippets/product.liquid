@@ -1,0 +1,72 @@
+<!-- /snippets/product.liquid-->
+
+{% assign description_position = '' %}
+{%- assign product_description_content = product.description -%}
+{%- assign has_tabs = false -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == "tab_description" -%}
+    {%- assign has_tabs = true -%}
+  {%- endif -%}
+{%- endfor -%}
+{%-if has_tabs -%}
+  {%- assign product_description_content = product_description_content | split: '<h6>' | first -%}
+{%- endif -%}
+{% if product_description_content contains '[split]' %}
+  {% assign description_position = 'both' %}
+{% endif  %}
+
+<div class="wrapper page-margin--product">
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+
+  <div class="grid">
+    <div class="grid__item medium-up--one-half" data-product-wrapper>
+      {%- include 'product-slideshow' -%}
+    </div>
+
+    <div class="grid__item medium-up--one-half product__form__wrapper">
+      {%- include 'product-form' -%}
+
+      <div class="product__description rte">
+        {{ product_description_content | replace: '<p>[split]</p>', '[split]' | split: '[split]' | first }}
+      </div>
+
+      {%- if section.blocks.size > 0 and section.settings.tabs_position == 'sidebar'-%}
+        <div class="tabs-wrapper productTabsWrapper">
+          {% include 'product-tabs' %}
+        </div>
+      {%- endif -%}
+
+      {% if section.settings.show_share_buttons %}
+        {%- assign share_image = current_variant.featured_media.preview_image | default: product.featured_media.preview_image -%}
+        {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: share_image %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if description_position == 'both' %}
+    <div class="product__description--below rte">
+      {{ product_description_content | replace: '<p>[split]</p>', '[split]' | split: '[split]' | last }}
+    </div>
+  {% endif %}
+
+  {%- if section.blocks.size > 0 and section.settings.tabs_position == 'below' -%}
+    <div class="tabs-wrapper productTabsWrapper">
+      {% include 'product-tabs' %}
+    </div>
+  {%- endif -%}
+
+</div>
+
+<style>
+  model-viewer {
+    --progress-bar-color: {{ settings.color_body_text }};
+  }
+</style>
+{% unless product == empty %}
+  <script type="application/json" data-product-json>
+    {{ product | json }}
+  </script>
+  <script type="application/json" id="ModelJson-{{ section.id }}">
+    {{ product.media | where: 'media_type', 'model' | json }}
+  </script>
+{% endunless %}

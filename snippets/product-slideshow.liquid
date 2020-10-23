@@ -1,0 +1,29 @@
+<!-- /snippets/product-slideshow.liquid -->
+
+<div class="product__slides product-single__photos" data-product-slideshow data-product-single-media-group>
+  {% for media in product.media %}
+    {% include 'media', media: media, featured_media: product.featured_media %}
+  {% endfor %}
+</div>
+
+{% assign first_3d_model = product.media | where: "media_type", "model" | first %}
+{% if first_3d_model %}
+  <button
+    class="btn btn--secondary btn--neutral btn--ar product-single__view-in-space"
+    data-shopify-xr
+    data-shopify-model3d-id="{{ first_3d_model.id }}"
+    data-shopify-title="{{ product.title }}"
+    data-shopify-xr-hidden>
+    {% include 'icon-media-model' %}
+    <span class="product-single__view-in-space-text">{{ 'products.product.view_in_space' | t }}</span>
+  </button>
+{% endif %}
+
+<noscript>
+  {% for image in product.media %}
+    <img src="{{ image.preview_image | img_url: '900x' }}" alt="{{ image.alt | default: product.title  }}">
+  {% endfor %}
+</noscript>
+{% if product.media.size > 1 %}
+  <div data-product-thumbs class="product__thumbs"></div>
+{%- endif -%}
