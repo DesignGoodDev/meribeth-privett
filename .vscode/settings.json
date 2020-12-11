@@ -1,0 +1,13 @@
+{
+  "editor.codeActionsOnSave": {
+        "source.fixAll": false
+    },
+    "stylelint.enable": false,
+    "[scss]": {
+        "editor.formatOnSave": false,
+        "editor.suggest.insertMode": "replace",
+        "gitlens.codeLens.scopes": [
+            "document"
+        ]
+    },
+}

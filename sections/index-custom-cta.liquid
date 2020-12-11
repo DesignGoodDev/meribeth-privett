@@ -1,0 +1,116 @@
+<!-- /sections/index-custom-cta.liquid-->
+
+<style>
+  {% if section.settings.image != blank %}
+    .cta__image{
+      width: 100%;
+      max-width: {{ section.settings.logo_max_width }}px;
+      margin-bottom: 30px;
+    }
+  {% endif %}
+</style>
+
+<div class="index-rte text-center {{ section.settings.color_bg }}" data-section-id="{{ section.id }}" data-section-type="index-page">
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item large-up--five-sixths large-up--push-one-twelfth">
+        {% if section.settings.image != blank %}
+        {% capture image_size %}{{ section.settings.logo_max_width | times: 2 | round }}x{% endcapture %}
+          <img src="{{ section.settings.image | img_url: image_size }}"
+            srcset="{{ section.settings.image | img_url: image_size }} 1x, {{ section.settings.image | img_url: image_size, scale: 2 }} 2x"
+            alt="{{ section.settings.image.alt | default: shop.name }}" class="cta__image">
+        {% endif %}
+        {% if section.settings.title != blank %}
+          {% include 'dots', direction: 'down' %}
+          <div class="title-decoration"></div>
+          <h2 class="title--decorated">{{ section.settings.title | escape }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="homepage-page__content rte--index rte">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+        {% if section.settings.link_text != blank %}
+          <a href="{{ section.settings.link }}" class="{{ section.settings.button_style }}" style="margin-top: 15px;">{{ section.settings.link_text | escape }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CTA - Custom",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 450,
+      "step": 10,
+      "unit": "px",
+      "label": "Custom logo width",
+      "default": 250
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Rich Text"
+    },
+    {
+      "id": "description",
+      "type": "richtext",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "color_bg",
+      "label": "Background color",
+      "default": "index--white",
+      "options": [
+        { "value": "index--white", "label": "White"},
+        { "value": "index--gray", "label": "Secondary"},
+        { "value": "index--alt", "label": "Alternate"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Text",
+      "default": "View products"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button color",
+      "default": "btn btn--large",
+      "options": [
+        { "value": "btn btn--large btn--white", "label": "White"},
+        { "value": "btn btn--large", "label": "Primary accent"},
+        { "value": "btn btn--large btn--cool", "label": "Secondary accent"},
+        { "value": "btn btn--large btn--neutral", "label": "Dark"}
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "CTA - Custom",
+    "category": "Text"
+  }]
+}
+{% endschema %}

@@ -34,6 +34,8 @@
 
   {% include 'social-meta-tags' %}
 
+  <link rel="stylesheet" href="https://use.typekit.net/sij3mra.css">
+
   {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
 
   <script>
@@ -75,7 +77,7 @@
     {{ content_for_layout }}
   </main>
 
-  {% section 'footer' %}
+  {% section 'footer-custom' %}
 
   <!-- Paste popup code between comments ===================================== -->
 

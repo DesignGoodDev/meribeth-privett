@@ -1,0 +1,161 @@
+<!-- /sections/footer-custom.liquid -->
+
+<style>
+  {% if section.settings.footer_logo != blank %}
+    .footer__logo{
+      max-width: {{ section.settings.logo_max_width }}px;
+    }
+  {% endif %}
+</style>
+
+{% assign footer_count = 1 %}
+
+{% assign footer_currency = false %}
+{%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
+    {% assign footer_currency = true %}
+{%- endif -%}
+{%- if footer_currency -%}{% assign footer_count = footer_count | plus: 1 %}{%- endif -%}
+
+<footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
+  <div class="wrapper">
+    <div class="footer__top">
+      <div class="footer__top-item">
+        {%- if section.settings.footer_title != blank -%}
+          <h3 class=""><b>{{ section.settings.footer_title }}</b></h3>
+        {%- endif -%}
+        {%- if section.settings.footer_description.size > 0 -%}
+          <div class="rte footer__description">{{ section.settings.footer_description }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="footer__top-item">
+        {% if section.settings.footer_logo != blank %}
+          {% include 'dots', direction: 'down' %}
+          <div class="title-decoration"></div>
+          {% capture image_size %}{{ section.settings.logo_max_width | times: 1.5 | round }}x{% endcapture %}
+          <a href="{{ routes.root_url }}" class="site-logo footer__logo">
+            <img src="{{ section.settings.footer_logo | img_url: image_size }}"
+               srcset="{{ section.settings.footer_logo | img_url: image_size }} 1x, {{ section.settings.footer_logo | img_url: image_size, scale: 2 }} 2x"
+               alt="{{ section.settings.footer_logo.alt | default: shop.name }}">
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="footer__top-item">
+        <div class="top-item__socials">
+          {% if section.settings.footer_social_enable %}
+          {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+          {% for social in social_accounts %}
+            {%- assign social_handle = social | handleize -%}
+            {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+            {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+            {% if settings[social_link] != blank %}
+              <a class="footer__icon footer__icon--social" href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                {% include social_icon %}
+                <span class="icon-fallback-text">{{ social }}</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+        </div>
+
+        {%- if footer_currency or footer_locale -%}
+        <div class="footer__item footer__item--selects">
+          {%- include 'cross-border' -%}
+        </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    <hr >
+
+    <div class="footer__bottom footer__bottom--{{footer_count}}">
+
+      {%- assign footer_linklist = linklists[section.settings.footer_linklist] -%}
+      {% if footer_linklist.links.size > 0 %}
+      <div class="footer__item footer__item--nav">
+        <ul class="footer__nav">
+          {% for link in footer_linklist.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {%- endif -%}
+
+
+      <div class="footer__item footer__item--copyright">
+        <small>
+          {{ 'layout.footer.copyright' | t }} &copy; {{ shop.name }} {{ 'now' | date: "%Y" }}
+        </small>
+        <small class="dg-credit">
+          <a href="https://designgood.com" target="_blank" rel="noopener noreferrer">Brand &amp; Website Created by <img src="{{ 'logo-designgood.svg' | asset_url }}" alt="DesignGood" itemprop="logo" width="106"></a>
+        </small>
+       </div>
+
+
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer - Custom",
+    "settings": [
+      {
+        "label": "Footer logo",
+        "type": "image_picker",
+        "id": "footer_logo",
+        "info": "400 x 200px .png"
+      },
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 50,
+        "max": 450,
+        "step": 10,
+        "unit": "px",
+        "label": "Custom logo width",
+        "default": 250
+      },
+      {
+        "type": "text",
+        "id": "footer_title",
+        "label": "Heading",
+        "default": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "footer_description",
+        "label": "Description",
+        "default": "<p>This area is used to describe your store.</p>"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist",
+        "label": "Footer menu",
+        "default": "main-menu",
+        "info": "This menu won't show dropdown items"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_social_enable",
+        "label": "Show social icons",
+        "default": true,
+        "info": "Show icons for all links in your social media theme settings"
+      },
+      {
+        "type": "header",
+        "content": "Currency selector",
+        "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_currency_selector",
+        "label": "Show currency selector",
+        "default": true
+      }
+    ]
+  }
+
+{% endschema %}

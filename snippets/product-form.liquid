@@ -5,9 +5,11 @@
   <div class="product__title__wrapper">
     <h1 class="product__title">{{ product.title }}</h1>
     <div class="product__price h2--accent" data-price-wrapper>
-      <span data-product-price>
-        {{ current_variant.price | money }}
-      </span>
+      {% if current_variant.available %}
+        <span data-product-price>
+          {{ current_variant.price | money }}
+        </span>
+      {% endif %}
 
       {% if product.compare_at_price_max > product.price %}
         <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>

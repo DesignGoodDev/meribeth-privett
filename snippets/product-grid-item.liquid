@@ -97,7 +97,9 @@
           {{ 'products.product.from' | t }}
         {% endif %}
 
-        {{ product.price | money }}
+        {%- unless sold_out and settings.tag_sellout -%}
+          {{ product.price | money }}
+        {% endunless %}
 
         {% if on_sale %}
           <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
