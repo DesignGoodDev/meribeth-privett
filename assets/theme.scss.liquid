@@ -3757,8 +3757,13 @@ body.focus-enabled *:focus{
 
 /*================ General layout styles ================*/
 
-body:not(.template-index):not(.template-collection){
-  background-color: $color-body;
+//body:not(.template-index):not(.template-collection){
+  // background-color: $color-body;
+  // background-color: #EBE7E4;
+//}
+
+body {
+  background-color: #EBE7E4;
 }
 
 html.container-layout {
@@ -3812,7 +3817,12 @@ html.container-layout {
 .template-activate_account .footer,
 .template-reset_password .footer{
   margin-top: 0;
+  padding-top: 0;
 }
+
+//.template-index .footer {
+  //padding-top: 0;
+//}
 
 .page-margin{
   margin-top: 60px;
@@ -3905,6 +3915,7 @@ select {
   font-weight: $font-weight-body;
   font-size: rem(16px * $font-adjust-body);
   font-style: normal;
+  letter-spacing: 1.02px;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -4228,7 +4239,7 @@ a:focus {
 }
 
 .index--rte a,
-.rte a{
+.rte a:not(.btn){
   text-decoration: underline;
 }
 
@@ -4241,7 +4252,8 @@ a:focus {
   width: auto;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  // letter-spacing: 0.06em;
+  letter-spacing: 2.23px;
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
@@ -4253,10 +4265,12 @@ a:focus {
   background-color: $color-accent;
   color: $color-accent-opposite;
   /*padding: 7px 14px;*/
-  padding: 10px 40px;
+  padding: 14px 50px;
   @include media-query($small){
     /*padding: 5px 10px;*/
     padding: 7px 30px;
+    white-space: normal;
+    line-height: 1.25;
   }
   &:hover {
     color: $color-accent-opposite;
@@ -4271,6 +4285,10 @@ a:focus {
     @include box_shadow(1, $color-accent);
     outline: none;
   }
+}
+
+p a.btn {
+  margin-top: 38px;
 }
 
 .btn--secondary{
@@ -4669,6 +4687,8 @@ textarea {
 }
 .custom-form__block select{
   min-width: 50%;
+  background-color: #fff;
+  width: 100%;
 }
 .custom-form__button{
   margin-top: 15px
@@ -5055,9 +5075,9 @@ form .errors,
 }
 .header-wrapper, .header-wrapper a{
   color: $color-nav-text-dark;
-  &:hover{
-    color: $color-accent;
-  }
+  // &:hover{
+  //   color: $color-accent;
+  // }
 }
 
 .header__logo h1{
@@ -5127,6 +5147,7 @@ form .errors,
 .header--desktop{
   border-bottom: 1px solid $color-nav-border;
   background-color: $color-nav;
+  padding-bottom: 8px;
   .main-menu-dropdown{
     font-size: 14px * $font-adjust-body;
   }
@@ -5194,17 +5215,30 @@ form .errors,
     & > li {
       display: inline-block;
       padding: 14px 5px 11px 5px;
-      &:first-child a {
-        margin-left: 10px;
-      }
+      // &:first-child a {
+      //   margin-left: 10px;
+      // }
       & > a {
         margin-left: 30px;
-        padding: 14px 5px;
+        // padding: 14px 5px;
+        padding: 9px 0;
         white-space: nowrap;
-        text-transform: uppercase;
-        letter-spacing: 5.5px;
-        font-size: 0.675em * $font-adjust-body;
-        font-weight: $font-weight-body-mid;
+        // text-transform: uppercase;
+        // letter-spacing: 5.5px;
+        letter-spacing: 1.5px;
+        // font-size: 0.675em * $font-adjust-body;
+        font-size: 1em;
+        // font-weight: $font-weight-body-mid;
+        border-bottom: 4px solid transparent;
+        transition: border 0.3s cubic-bezier(0, 0, 0.33, 1);
+      }
+
+      & > a:hover {
+        border-bottom: 4px solid #B19569;
+      }
+
+      &.main-menu--active > a {
+        border-bottom: 4px solid #B19569;
       }
     }
   }
@@ -6347,15 +6381,24 @@ $colorGiftBorder: $color-text;
 /*================ Product Grid Item ================*/
 
 .figcaption{
-  padding: 30px;
+  padding: 24px;
   background-color: $color-product-grid;
   @include media-query($medium){ padding: 20px; }
   @include media-query($small){ padding: 15px; }
 }
+.index-collection .grid {
+  margin-bottom: -30px;
+}
+.index-collection .figcaption {
+  margin-bottom: -24px;
+}
 .name_wrapper{
   color: $color-text-dark;
   font-weight: $font-weight-body-mid;
-  margin: 0.25rem 0;
+  margin: 13px 0;
+  font-size: 20px;
+  letter-spacing: 1.13px;
+  line-height: 23px;
 }
 .vendor_wrapper{
   color: $color-text;
@@ -6368,6 +6411,9 @@ $colorGiftBorder: $color-text;
   color: $color-text-bright;
   @extend .h6--accent;
   margin: 0.25rem 0;
+}
+.index-collection .price_wrapper {
+  font-size: 18px;
 }
 .vendor__link{
   position: relative;
@@ -6664,7 +6710,7 @@ $colorGiftBorder: $color-text;
   font-weight: $font-weight-body-bold;
 }
 .collection{
-  background: $color-body;
+  //background: $color-body;
   padding-top: rem(30px);
   padding-bottom: rem(90px);
   .main-content{ padding-bottom: 0; }
@@ -6922,6 +6968,39 @@ $colorGiftBorder: $color-text;
 .divider-bar{
   color: darken($color-footer-bg, 15%);
   margin: 0 5px;
+}
+
+.footer__signup {
+  color: #EBE7E4;
+  background-color: #3B3836;
+  padding: 50px 30px;
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.footer__signup h2,
+.footer__signup input[type="email"] {
+  color: #EBE7E4;
+}
+
+.footer__signup input[type="email"] {
+  text-align: center;
+  background-color: transparent;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #EBE7E4;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.footer__signup input[type="submit"] {
+  background-color: #EBE7E4;
+  color: #3B3836;
+}
+
+#about-me .footer__signup {
+  display: none;
 }
 
 .footer__top {
@@ -7246,7 +7325,7 @@ ul.tabs > li.current{
   margin-bottom: auto;
   color: $color-text-dark;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 .accordion-content {
@@ -7257,7 +7336,8 @@ ul.tabs > li.current{
 .accordion .icon-minus,
 .accordion .icon-plus{
   float:right;
-  color: $color-text-bright;
+  color: #B19569;
+  width: 12px;
 }
 .accordion .icon-plus svg{
   transform: rotateZ(0deg);
@@ -8463,6 +8543,16 @@ dd{
   }
 }
 
+.wrapper.overlap {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  @include media-query ($small) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .overlap__item {
   flex: 0 1 50%;
   flex: 0 1 45%;
@@ -8531,7 +8621,7 @@ dd{
       margin: -25px 15px 0 15px;
       margin: 0;
       box-shadow: none;
-      padding: 60px 15px 30px;
+      padding: 60px 15px 0;
     }
   }
 }
@@ -8830,13 +8920,13 @@ dd{
 }
 .contact__form,
 .contact__faq{
-  width: 50%;
+  width: 100%;
 }
-.contact__form{
+/*.contact__form{
   padding-right: 15px;
-}
+}*/
 .contact__faq{
-  padding-left: 15px;
+  padding-top: 60px;
 }
 .contact__policy{
   display: block;
@@ -9312,8 +9402,8 @@ body.focus-enabled .media--hidden{
 .index-row,
 .index-collection,
 .index-collection-grid{
-  padding-top: 90px;
-  padding-bottom:  90px;
+  padding-top: 97px;
+  padding-bottom: 97px;
   @include media-query($small) {
     padding-top: 60px;
     padding-bottom:  60px;
@@ -9325,10 +9415,8 @@ body.focus-enabled .media--hidden{
   }
 }
 .index-rte{
-  padding-top: 60px;
-  padding-top: 90px;
-  padding-bottom: 30px;
-  padding-bottom: 90px;
+  padding-top: 97px;
+  padding-bottom: 97px;
   @include media-query($small) {
     padding-top: 60px;
     padding-bottom: 60px;
@@ -9423,6 +9511,13 @@ body.focus-enabled .media--hidden{
     color: $color-text;
   }
 }
+.index--dark{
+  background-color: $color-text;
+  h2,
+  .rte--index {
+    color: #EBE7E4;
+  }
+}
 
 /*=============== Home Columns ===============*/
 
@@ -9437,6 +9532,13 @@ body.focus-enabled .media--hidden{
 }
 .column__text p{
   margin-top: 0;
+}
+
+@media only screen and (min-width: 750px) {
+  .index-columns .grid.align-middle {
+    display: flex;
+    align-items: center;
+  }
 }
 
 /*================ Shared Image Classes ================*/
@@ -9594,8 +9696,7 @@ body.focus-enabled .media--hidden{
     margin: 15px 30px;
   }
   @include media-query($small){
-    padding: 0;
-    margin: 9px 15px;
+    display: none;
   }
 }
 .hero__content--blank{
@@ -9757,12 +9858,12 @@ body.focus-enabled .media--hidden{
 
 .index__collection__title{
   color: $color-text-dark;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  font-size: rem(22px * $font-adjust-body);
-  @include media-query($widescreen){
-    margin-top: 35px;
-  }
+  margin-bottom: 37px;
+  font-size: rem(27px * $font-adjust-body);
+  letter-spacing: 2.53px;
+  // @include media-query($widescreen){
+  //   margin-top: 35px;
+  // }
 }
 .index__collection__description{
   margin-top: -20px;
@@ -10228,7 +10329,7 @@ body.focus-enabled .media--hidden{
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
-  @include box_shadow_light(4, $color-text);
+  /*@include box_shadow_light(4, $color-text);*/
 
   .team__button__wrapper &{
     width: 100px;
@@ -10345,4 +10446,70 @@ body.focus-enabled .media--hidden{
 /*============ Add any custom styles below this line ==================*/
 .main-content .shopify-policy__container {
   margin-top: 60px;
+}
+
+.page--contact__wrap,
+.page--about__wrap,
+#shopify-section-page-default {
+  text-align: center;
+}
+
+.page--contact__wrap .title-wrap .title--decorated,
+.page--about__wrap .title-wrap .title--decorated,
+#shopify-section-page-default .title--decorated {
+  position: relative;
+}
+
+.page--contact__wrap .title-wrap .title--decorated:after,
+.page--about__wrap .title-wrap .title--decorated:after,
+#shopify-section-page-default .title--decorated:after {
+  content: '';
+  background-image: url(#{'{{ "logo-mbp-black.svg" | asset_url }}'});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 136px 63px;
+  width: 100%;
+  height: 63px;
+  margin: 24px 0 48px;
+  text-align: center;
+  display: block;
+}
+
+.gold-snake {
+  position: relative;
+}
+
+.gold-snake:after {
+  content: '';
+  background-image: url(#{'{{ "logo-mbp-gold.svg" | asset_url }}'});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 98px 45px;
+  width: 100%;
+  height: 45px;
+  margin: 14px 0 37px;
+  text-align: center;
+  display: block;
+}
+
+.page__team__content h2 {
+  margin-top: 20px;
+}
+
+.ooo-instagram {
+  margin-top: 97px !important;
+  margin-bottom: 97px !important;
+
+  @include media-query ($small) {
+    margin-top: 60px !important;
+    margin-bottom: 60px !important;
+  }
+}
+
+.ooo-instagram .ooo-instagram-header {
+  margin-bottom: 17px;
+}
+
+.ooo-instagram .ooo-instagram-header h2 {
+  color: #3B3836;
 }

@@ -28,11 +28,10 @@
         {% for block in section.blocks %}
           {% if block.settings.image != blank %}
             {% assign img_object = block.settings.image %}
-          {% else %}
-            {%- assign img_object = 'blank.svg' | asset_url -%}
           {% endif %}
           <div class="grid__item review__item slide--{{ block.id }} slide--left" {{ block.shopify_attributes }}>
             <div class="review__card">
+              {% if block.settings.image != blank %}
               <div class="review__image__align">
                 <div class="review__image__wrapper">
                   <div class="background-size-cover lazyload" data-bgset="{% include 'bgset', image: img_object %}"></div>
@@ -41,6 +40,7 @@
                   </noscript>
                 </div>
               </div>
+              {% endif %}
               <div class="review__card__text">
                 <div class="review__card__text__contents">
                   {% if block.settings.title != blank %}

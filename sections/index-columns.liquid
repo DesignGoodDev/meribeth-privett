@@ -7,7 +7,7 @@
         <div class="title-decoration"></div>
         <h1 class="title--decorated">{{ section.settings.title | escape }}</h1>
     {% endif %}
-    <div class="grid {% unless section.blocks.size == 5 %}grid-uniform{% endunless %}">
+    <div class="grid {% unless section.blocks.size == 5 %}grid-uniform{% endunless %} {% if section.settings.align_middle %}align-middle{% endif %}">
       {%- assign grid_item_width = 'large-up--one-third medium--one-third' -%}
       {% case section.blocks.size %}
         {% when 1 %}
@@ -64,13 +64,16 @@
             {% endif %}
           {% endif %}
           {% if block.settings.title != blank %}
-            <h2 class="column__heading h5">{{ block.settings.title | escape }}</h2>
+            <h2 class="column__heading h3">{{ block.settings.title | escape }}</h2>
           {% endif %}
           {% if block.settings.text != blank %}
             <div class="column__text rte">{{ block.settings.text }}</div>
           {% endif %}
+          {% if block.settings.html_area != blank %}
+            <div class="column__text">{{ block.settings.html_area }}</div>
+          {% endif %}
           {% if block.settings.button_label != blank and block.settings.button_link != blank %}
-            <a href="{{ block.settings.button_link }}" class="btn btn--secondary">
+            <a href="{{ block.settings.button_link }}" class="btn" style="margin-top: 20px;">
               {{ block.settings.button_label | escape }}
             </a>
           {% endif %}
@@ -102,7 +105,8 @@
         "default": "index--white",
         "options": [
           { "value": "index--white", "label": "White"},
-          { "value": "index--gray", "label": "Secondary"}
+          { "value": "index--gray", "label": "Secondary"},
+          { "value": "index--alt", "label": "Alternate"}
         ]
       },
       {
@@ -120,6 +124,12 @@
             "label": "Centered"
           }
         ]
+      },
+      {
+        "type": "checkbox",
+        "id": "align_middle",
+        "label": "Vertical Align Middle",
+        "default": false
       }
     ],
     "blocks": [
@@ -149,6 +159,12 @@
             "id": "text",
             "label": "Text",
             "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+          },
+          {
+            "type": "html",
+            "id": "html_area",
+            "label": "Custom HTML",
+            "default": "<div><p>Some HTML content</p></div>"
           },
           {
             "type": "text",

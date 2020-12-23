@@ -1,6 +1,6 @@
-<!-- /templates/page.contact.liquid -->
+<!-- /templates/page.about.liquid -->
 
-<div class="page--contact__wrap">
+<div class="page--about__wrap">
 
   <div class="wrapper page-margin">
 
@@ -20,13 +20,14 @@
           {{ page.content }}
         </div>
 
-        <div class="page--contact">
-          {% section 'page-contact-nav' %}
-          <div class="contact__content">
-            {% section 'page-contact' %}
-            {% section 'page-contact-faq' %}
-            {% section 'page-contact-policies' %}
-          </div>
+      </div>
+
+      <div class="grid__item" style="padding-top: 60px;">
+
+        <div class="about__content">
+          {% section 'index-columns' %}
+          {% section 'reviews' %}
+          {% section 'index-custom-cta' %}
         </div>
 
       </div>
